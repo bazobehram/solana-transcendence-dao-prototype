@@ -1,0 +1,120 @@
+@if (!showActivities) {
+<div class="dashboard-container">
+  <header class="dashboard-header">
+    <h1>Transcendence DAO</h1>
+    <p class="subtitle">Communist Economy Prototype - Real Impact, Real Value</p>
+  </header>
+
+  <div class="wallet-section">
+    <div class="wallet-card">
+      <h2>Wallet Connection</h2>
+      
+      @if (!walletState().connected) {
+        <div class="wallet-disconnected">
+          <p>Connect your Phantom wallet to start using Transcendence DAO</p>
+          <button class="connect-btn" (click)="connectWallet()">
+            Connect Wallet
+          </button>
+        </div>
+      } @else {
+        <div class="wallet-connected">
+          <div class="wallet-info">
+            <p><strong>Connected:</strong> {{ formatPublicKey(walletState().publicKey) }}</p>
+            <p><strong>Balance:</strong> {{ walletState().balance | number:'1.2-2' }} SOL</p>
+          </div>
+          <button class="disconnect-btn" (click)="disconnectWallet()">
+            Disconnect
+          </button>
+        </div>
+      }
+    </div>
+  </div>
+
+  @if (walletState().connected) {
+    <div class="profile-section">
+      <div class="profile-card">
+        <h2>User Profile</h2>
+        
+        @if (!userProfile()) {
+          <div class="no-profile">
+            <p>Create your profile to start participating in Transcendence DAO</p>
+            <button class="create-profile-btn" (click)="createProfile()">
+              Create Profile
+            </button>
+          </div>
+        } @else {
+          <div class="profile-stats">
+            <div class="stat-item">
+              <span class="stat-label">SOLIDARITY Tokens Earned</span>
+              <span class="stat-value">{{ userProfile()?.tokensEarned | number:'1.2-2' }}</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-label">Hours Worked</span>
+              <span class="stat-value">{{ userProfile()?.hoursWorked }}</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-label">Activities Completed</span>
+              <span class="stat-value">{{ userProfile()?.activitiesCompleted }}</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-label">Reputation Score</span>
+              <span class="stat-value">{{ userProfile()?.reputationScore }}/100</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-label">Class Solidarity Score</span>
+              <span class="stat-value">{{ userProfile()?.classSolidarityScore }}</span>
+            </div>
+            @if (userProfile()?.unionMembership) {
+              <div class="union-badge">
+                ✊ Union Member
+              </div>
+            }
+          </div>
+        }
+      </div>
+    </div>
+
+    <div class="features-section">
+      <h2>Features</h2>
+      <div class="feature-grid">
+        <div class="feature-card">
+          <h3>🌍 Activities</h3>
+          <p>Register and verify environmental, disaster relief, and solidarity activities</p>
+          <button (click)="showActivities = true" class="btn-primary">Get Started</button>
+        </div>
+        
+        <div class="feature-card">
+          <h3>✊ Strike Support</h3>
+          <p>Support workers on strike and participate in solidarity funds</p>
+          <button disabled>Coming Soon</button>
+        </div>
+        
+        <div class="feature-card">
+          <h3>🏭 Worker Cooperatives</h3>
+          <p>Create and fund worker-owned cooperatives</p>
+          <button disabled>Coming Soon</button>
+        </div>
+        
+        <div class="feature-card">
+          <h3>🗳️ DAO Governance</h3>
+          <p>Participate in democratic decision-making</p>
+          <button disabled>Coming Soon</button>
+        </div>
+      </div>
+    </div>
+  }
+
+  <footer class="dashboard-footer">
+    <p>Built on Solana | Anti-Capitalist Tokenomics | Worker Solidarity</p>
+  </footer>
+</div>
+} @else {
+  <div class="activities-view">
+    <div class="back-button-container">
+      <button class="back-btn" (click)="showActivities = false">
+        ← Back to Dashboard
+      </button>
+    </div>
+    <app-activities></app-activities>
+  </div>
+}

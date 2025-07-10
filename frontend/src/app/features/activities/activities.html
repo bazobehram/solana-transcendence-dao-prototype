@@ -1,0 +1,132 @@
+<div class="activities-container">
+  <div class="activities-header">
+    <h1>🌍 Activities</h1>
+    <p>Register and verify real-world solidarity activities to earn SOLIDARITY tokens</p>
+  </div>
+
+  <!-- Create New Activity Section -->
+  <div class="create-activity-section">
+    <h2>Register New Activity</h2>
+    <form class="activity-form" (ngSubmit)="createActivity()">
+      <div class="form-row">
+        <div class="form-group">
+          <label>Category</label>
+          <select [(ngModel)]="newActivity.category" name="category" required>
+            <option [value]="ActivityCategory.Environmental">🌍 Environmental Cleanup</option>
+            <option [value]="ActivityCategory.Disaster">🚨 Disaster Relief</option>
+            <option [value]="ActivityCategory.Elderly">👴 Elderly Care</option>
+            <option [value]="ActivityCategory.Education">📚 Education Support</option>
+            <option [value]="ActivityCategory.WorkerSolidarity">✊ Worker Solidarity</option>
+          </select>
+        </div>
+        
+        <div class="form-group">
+          <label>Estimated Hours</label>
+          <input 
+            type="number" 
+            [(ngModel)]="newActivity.estimatedHours" 
+            name="hours"
+            min="1" 
+            max="12" 
+            required>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Activity Description</label>
+        <textarea 
+          [(ngModel)]="newActivity.description" 
+          name="description"
+          placeholder="Describe what you did, when, and its impact..."
+          maxlength="200"
+          rows="3"
+          required></textarea>
+        <small>{{ newActivity.description.length }}/200 characters</small>
+      </div>
+
+      <div class="form-group">
+        <label>Location</label>
+        <input 
+          type="text" 
+          [(ngModel)]="newActivity.address" 
+          name="address"
+          placeholder="Enter address or landmark"
+          required>
+        <small>📍 GPS coordinates will be captured automatically</small>
+      </div>
+
+      <button 
+        type="submit" 
+        class="create-btn"
+        [disabled]="isCreatingActivity || !newActivity.description || !newActivity.address">
+        {{ isCreatingActivity ? 'Creating...' : 'Register Activity' }}
+      </button>
+    </form>
+  </div>
+
+  <!-- Activities List -->
+  <div class="activities-list">
+    <h2>Community Activities</h2>
+    
+    @if (activities().length === 0) {
+      <div class="no-activities">
+        <p>No activities registered yet. Be the first to contribute to the community!</p>
+      </div>
+    } @else {
+      <div class="activities-grid">
+        @for (activity of activities(); track activity.id) {
+          <div class="activity-card">
+            <div class="activity-header">
+              <span class="category-badge">{{ getCategoryDisplayName(activity.category) }}</span>
+              <span 
+                class="status-badge"
+                [style.background-color]="getStatusColor(activity.status)">
+                {{ activity.status }}
+              </span>
+            </div>
+            
+            <div class="activity-content">
+              <p class="description">{{ activity.description }}</p>
+              <p class="location">📍 {{ activity.location.address }}</p>
+              
+              <div class="activity-meta">
+                <span>⏱️ {{ activity.estimatedHours }} hours</span>
+                <span>💰 {{ activity.rewardAmount }} SOL tokens</span>
+                <span>👤 {{ formatPublicKey(activity.creator) }}</span>
+              </div>
+              
+              <div class="activity-stats">
+                <span>✅ {{ activity.verificationCount }}/3 verifications</span>
+                <span>📅 {{ activity.timestamp | date:'short' }}</span>
+              </div>
+            </div>
+            
+            @if (activity.status === ActivityStatus.Pending && canVerify(activity)) {
+              <div class="verification-actions">
+                <p><strong>Verify this activity:</strong></p>
+                <div class="verify-buttons">
+                  <button 
+                    class="verify-btn approve" 
+                    (click)="verifyActivity(activity.id, true)">
+                    ✅ Verify
+                  </button>
+                  <button 
+                    class="verify-btn reject" 
+                    (click)="verifyActivity(activity.id, false)">
+                    ❌ Reject
+                  </button>
+                </div>
+              </div>
+            }
+            
+            @if (activity.status === ActivityStatus.Verified) {
+              <div class="verified-badge">
+                🎉 <strong>Verified Activity!</strong> SOLIDARITY tokens distributed.
+              </div>
+            }
+          </div>
+        }
+      </div>
+    }
+  </div>
+</div>

@@ -1,0 +1,406 @@
+{
+  "version": "0.1.0",
+  "name": "smart_contracts",
+  "constants": [],
+  "instructions": [
+    {
+      "name": "initializeDao",
+      "accounts": [
+        {
+          "name": "daoState",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "authority",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "authority",
+          "type": "publicKey"
+        }
+      ]
+    },
+    {
+      "name": "createUserProfile",
+      "accounts": [
+        {
+          "name": "userProfile",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "daoState",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "user",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "unionMembership",
+          "type": "bool"
+        }
+      ]
+    },
+    {
+      "name": "createActivity",
+      "accounts": [
+        {
+          "name": "activity",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "daoState",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "user",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "clock",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "category",
+          "type": {
+            "defined": "ActivityCategory"
+          }
+        },
+        {
+          "name": "description",
+          "type": "string"
+        },
+        {
+          "name": "location",
+          "type": {
+            "defined": "Location"
+          }
+        },
+        {
+          "name": "estimatedHours",
+          "type": "u32"
+        }
+      ]
+    },
+    {
+      "name": "verifyActivity",
+      "accounts": [
+        {
+          "name": "activity",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "userProfile",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "verifier",
+          "isMut": true,
+          "isSigner": true
+        }
+      ],
+      "args": [
+        {
+          "name": "verified",
+          "type": "bool"
+        }
+      ]
+    },
+    {
+      "name": "createStrike",
+      "accounts": [
+        {
+          "name": "strike",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "user",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "clock",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "company",
+          "type": "string"
+        },
+        {
+          "name": "unionVerification",
+          "type": "bool"
+        },
+        {
+          "name": "participantCount",
+          "type": "u32"
+        }
+      ]
+    }
+  ],
+  "accounts": [
+    {
+      "name": "DaoState",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "authority",
+            "type": "publicKey"
+          },
+          {
+            "name": "totalSupply",
+            "type": "u64"
+          },
+          {
+            "name": "circulatingSupply",
+            "type": "u64"
+          },
+          {
+            "name": "medianBalance",
+            "type": "u64"
+          },
+          {
+            "name": "activeUsers",
+            "type": "u64"
+          },
+          {
+            "name": "totalActivities",
+            "type": "u64"
+          },
+          {
+            "name": "bump",
+            "type": "u8"
+          }
+        ]
+      }
+    },
+    {
+      "name": "UserProfile",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "owner",
+            "type": "publicKey"
+          },
+          {
+            "name": "unionMembership",
+            "type": "bool"
+          },
+          {
+            "name": "tokensEarned",
+            "type": "u64"
+          },
+          {
+            "name": "hoursWorked",
+            "type": "u64"
+          },
+          {
+            "name": "activitiesCompleted",
+            "type": "u64"
+          },
+          {
+            "name": "reputationScore",
+            "type": "u64"
+          },
+          {
+            "name": "strikeParticipation",
+            "type": "u64"
+          },
+          {
+            "name": "classSolidarityScore",
+            "type": "u64"
+          },
+          {
+            "name": "lastActivity",
+            "type": "i64"
+          },
+          {
+            "name": "bump",
+            "type": "u8"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Activity",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "creator",
+            "type": "publicKey"
+          },
+          {
+            "name": "category",
+            "type": {
+              "defined": "ActivityCategory"
+            }
+          },
+          {
+            "name": "description",
+            "type": "string"
+          },
+          {
+            "name": "location",
+            "type": {
+              "defined": "Location"
+            }
+          },
+          {
+            "name": "estimatedHours",
+            "type": "u32"
+          },
+          {
+            "name": "status",
+            "type": {
+              "defined": "ActivityStatus"
+            }
+          },
+          {
+            "name": "verificationCount",
+            "type": "u8"
+          },
+          {
+            "name": "verifiers",
+            "type": {
+              "vec": "publicKey"
+            }
+          },
+          {
+            "name": "rewardAmount",
+            "type": "u64"
+          },
+          {
+            "name": "timestamp",
+            "type": "i64"
+          },
+          {
+            "name": "bump",
+            "type": "u8"
+          }
+        ]
+      }
+    }
+  ],
+  "types": [
+    {
+      "name": "ActivityCategory",
+      "type": {
+        "kind": "enum",
+        "variants": [
+          {
+            "name": "Environmental"
+          },
+          {
+            "name": "Disaster"
+          },
+          {
+            "name": "Elderly"
+          },
+          {
+            "name": "Education"
+          },
+          {
+            "name": "WorkerSolidarity"
+          }
+        ]
+      }
+    },
+    {
+      "name": "ActivityStatus",
+      "type": {
+        "kind": "enum",
+        "variants": [
+          {
+            "name": "Pending"
+          },
+          {
+            "name": "Verified"
+          },
+          {
+            "name": "Rejected"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Location",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "latitude",
+            "type": "f64"
+          },
+          {
+            "name": "longitude",
+            "type": "f64"
+          },
+          {
+            "name": "address",
+            "type": "string"
+          }
+        ]
+      }
+    }
+  ],
+  "errors": [
+    {
+      "code": 6000,
+      "name": "DescriptionTooLong",
+      "msg": "Description is too long. Maximum 200 characters allowed."
+    },
+    {
+      "code": 6001,
+      "name": "AlreadyVerified",
+      "msg": "User has already verified this activity."
+    },
+    {
+      "code": 6002,
+      "name": "ActivityNotPending",
+      "msg": "Activity is not in pending status."
+    }
+  ]
+}
