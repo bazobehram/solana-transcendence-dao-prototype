@@ -1,5 +1,5 @@
 name: Deploy to GitHub Pages
-# Force new deployment at $(date)
+# Another attempt at refreshing cache: $(date)
 
 on:
   push:
