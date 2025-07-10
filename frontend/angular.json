@@ -32,7 +32,8 @@
             ],
             "styles": [
               "src/styles.scss"
-            ]
+            ],
+            "baseHref": "/"
           },
           "configurations": {
             "production": {
@@ -64,7 +65,8 @@
                 }
               ],
               "outputHashing": "all",
-              "baseHref": "/solana-transcendence-dao-prototype/"
+              "baseHref": "/solana-transcendence-dao-prototype/",
+              "deployUrl": "/solana-transcendence-dao-prototype/"
             },
             "development": {
               "optimization": false,
