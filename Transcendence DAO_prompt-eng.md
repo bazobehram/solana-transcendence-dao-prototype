@@ -1,4 +1,4 @@
-Transcendence DAO - Communist Economy Prototype
+Transcendence DAO - Collective Economy Prototype
 Project Summary
 EcoSolidarity is a decentralized application based on the principles of Das Kapital, which tokenizes nature conservation and social solidarity activities. Users earn SOLIDARITY (SOL) tokens in exchange for real-world aid activities (disaster relief, environmental protection, elderly care, etc.) and participate in a collective economic system.
 
@@ -385,7 +385,7 @@ Knowledge Base: Sharing of cooperative experiences
 
 With this system, we are building a platform that responds to the real needs of the working class, focuses on labor rights, and promotes class solidarity!
 
-Communist Tokenomics - Anti-Capitalist System
+Collective Tokenomics - Anti-Capitalist System
 1. Progressive Decay System
 Token Decay Rate = (Token Amount / Median Balance) × 0.05
 Purpose: To prevent the accumulation of wealth
@@ -496,7 +496,7 @@ Community Moderation: Self-governing community
 
 Open Source: Volunteer developer contributions
 
-This system offers a sustainable tokenomics that truly operates on communist principles, prevents wealth accumulation, and is sustainable!
+This system offers a sustainable tokenomics that truly operates on Collective principles, prevents wealth accumulation, and is sustainable!
 
 Smart Contract Structure
 Rust

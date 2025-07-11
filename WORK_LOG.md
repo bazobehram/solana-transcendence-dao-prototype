@@ -48,7 +48,7 @@ Transcendence DAO (EcoSolidarity) is a decentralized application based on Das Ka
      - User profile creation and display
      - Mock data for testing (tokens earned, activities, etc.)
      - Feature cards for future modules (Activities, Strikes, Cooperatives, DAO)
-   - Added responsive styling with communist/solidarity theme (red colors)
+   - Added responsive styling with Collective/solidarity theme (red colors)
    - Successfully builds and compiles
 7. **Smart Contract & Frontend Integration**:
    - Fixed smart contract compilation errors (variable borrowing, function signatures)
