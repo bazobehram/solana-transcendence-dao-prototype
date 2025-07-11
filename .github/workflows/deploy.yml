@@ -1,5 +1,5 @@
 name: Deploy to GitHub Pages
-# Another attempt at refreshing cache: $(date)
+# GitHub Pages now uses gh-pages branch
 
 on:
   push:
