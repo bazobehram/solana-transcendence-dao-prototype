@@ -2,12 +2,8 @@ use anchor_lang::prelude::*;
 
 declare_id!("Fg6PaFpoGXkYsidMpWTK6W2BeZ7FEfcYkg476zPFsLnS");
 
-const SOLIDARITY_TOKEN_DECIMALS: u8 = 9;
 const MAX_VERIFICATION_COUNT: u8 = 3;
-const MINIMUM_WAGE_RATIO: u64 = 50; // Minimum 50 tokens per hour
-const MINIMUM_AUTONOMY: u64 = 10; // Minimum autonomy score
 const UBI_DAILY_AMOUNT: u64 = 10_000_000_000; // 10 SOL tokens in lamports
-const WEALTH_CAP_MULTIPLIER: u64 = 10;
 
 #[program]
 pub mod smart_contracts {
@@ -248,7 +244,6 @@ pub mod smart_contracts {
 
     // Distribute UBI to all active users
     pub fn distribute_ubi(ctx: Context<DistributeUbi>) -> Result<()> {
-        let _dao_state = &ctx.accounts.dao_state;
         let user_profile = &mut ctx.accounts.user_profile;
         
         // Check if user is eligible (active in last week)
