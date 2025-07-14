@@ -44,6 +44,11 @@ export class Activities {
     
     // Get user's current location
     this.getCurrentLocation();
+    
+    // Enable real-time updates when wallet is connected
+    if (this.solanaService.isConnected()) {
+      this.enableRealTimeUpdates();
+    }
   }
 
   private getCurrentLocation(): void {
@@ -169,5 +174,21 @@ export class Activities {
     
     // Can't verify if already verified by this user
     return !activity.verifiers.some(verifier => verifier.equals(currentUser));
+  }
+
+  // Real-time update methods
+  enableRealTimeUpdates(): void {
+    console.log('Enabling real-time activity updates...');
+    this.transcendenceDaoService.enableRealTimeUpdates();
+  }
+
+  disableRealTimeUpdates(): void {
+    console.log('Disabling real-time activity updates...');
+    this.transcendenceDaoService.disableRealTimeUpdates();
+  }
+
+  async refreshActivities(): Promise<void> {
+    console.log('Manually refreshing activities...');
+    await this.transcendenceDaoService.refreshAllData();
   }
 }

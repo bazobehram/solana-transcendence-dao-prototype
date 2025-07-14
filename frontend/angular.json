@@ -22,6 +22,7 @@
           "builder": "@angular/build:application",
           "options": {
             "browser": "src/main.ts",
+            "polyfills": ["src/polyfills.ts"],
             "tsConfig": "tsconfig.app.json",
             "inlineStyleLanguage": "scss",
             "assets": [
@@ -33,7 +34,30 @@
             "styles": [
               "src/styles.scss"
             ],
-            "baseHref": "/"
+            "baseHref": "/",
+            "define": {
+              "global": "globalThis",
+              "process": "globalThis.process",
+              "Buffer": "globalThis.Buffer"
+            },
+            "allowedCommonJsDependencies": [
+              "buffer",
+              "process",
+              "util",
+              "assert",
+              "stream-browserify",
+              "crypto-browserify",
+              "bn.js",
+              "bs58",
+              "borsh",
+              "@solana/buffer-layout",
+              "jayson",
+              "base64-js",
+              "camelcase",
+              "js-sha256",
+              "@coral-xyz/borsh",
+              "eventemitter3"
+            ]
           },
           "configurations": {
             "production": {

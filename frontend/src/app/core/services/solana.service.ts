@@ -10,6 +10,8 @@ export interface WalletState {
   connected: boolean;
   publicKey: PublicKey | null;
   balance: number;
+  signTransaction?: (transaction: Transaction) => Promise<Transaction>;
+  signAllTransactions?: (transactions: Transaction[]) => Promise<Transaction[]>;
 }
 
 @Injectable({
@@ -129,11 +131,14 @@ export class SolanaService {
   private async updateWalletState(publicKey: PublicKey): Promise<void> {
     try {
       const balance = await this.connection.getBalance(publicKey);
+      const solana = (window as any).solana;
 
       this.walletStateSignal.set({
         connected: true,
         publicKey,
         balance: balance / 1e9, // Convert lamports to SOL
+        signTransaction: solana?.signTransaction,
+        signAllTransactions: solana?.signAllTransactions,
       });
     } catch (error) {
       console.error("Failed to update wallet state:", error);
@@ -175,5 +180,26 @@ export class SolanaService {
 
   getCurrentWalletState(): WalletState {
     return this.walletState();
+  }
+
+  // Real-time subscription methods
+  subscribeToAccountChanges(publicKey: PublicKey, callback: (accountInfo: any) => void): number {
+    return this.connection.onAccountChange(publicKey, callback, 'confirmed');
+  }
+
+  subscribeToProgramAccountChanges(programId: PublicKey, callback: (keyedAccountInfo: any) => void): number {
+    return this.connection.onProgramAccountChange(programId, callback, 'confirmed');
+  }
+
+  unsubscribe(subscriptionId: number): void {
+    this.connection.removeAccountChangeListener(subscriptionId);
+  }
+
+  async getAccountInfo(publicKey: PublicKey): Promise<any> {
+    return await this.connection.getAccountInfo(publicKey);
+  }
+
+  async getProgramAccounts(programId: PublicKey): Promise<readonly any[]> {
+    return await this.connection.getProgramAccounts(programId);
   }
 }

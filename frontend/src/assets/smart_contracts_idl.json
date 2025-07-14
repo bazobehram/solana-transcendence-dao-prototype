@@ -1,0 +1,884 @@
+{
+  "version": "0.1.0",
+  "name": "smart_contracts",
+  "instructions": [
+    {
+      "name": "initializeDao",
+      "accounts": [
+        {
+          "name": "daoState",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "authority",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "authority",
+          "type": "publicKey"
+        }
+      ]
+    },
+    {
+      "name": "createUserProfile",
+      "accounts": [
+        {
+          "name": "userProfile",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "daoState",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "user",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "unionMembership",
+          "type": "bool"
+        }
+      ]
+    },
+    {
+      "name": "createActivity",
+      "accounts": [
+        {
+          "name": "activity",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "daoState",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "user",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "clock",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "category",
+          "type": {
+            "defined": "ActivityCategory"
+          }
+        },
+        {
+          "name": "description",
+          "type": "string"
+        },
+        {
+          "name": "location",
+          "type": {
+            "defined": "Location"
+          }
+        },
+        {
+          "name": "estimatedHours",
+          "type": "u32"
+        }
+      ]
+    },
+    {
+      "name": "verifyActivity",
+      "accounts": [
+        {
+          "name": "activity",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "userProfile",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "verifier",
+          "isMut": true,
+          "isSigner": true
+        }
+      ],
+      "args": [
+        {
+          "name": "verified",
+          "type": "bool"
+        }
+      ]
+    },
+    {
+      "name": "createStrike",
+      "accounts": [
+        {
+          "name": "strike",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "user",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "clock",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "company",
+          "type": "string"
+        },
+        {
+          "name": "unionVerification",
+          "type": "bool"
+        },
+        {
+          "name": "participantCount",
+          "type": "u32"
+        }
+      ]
+    },
+    {
+      "name": "supportStrike",
+      "accounts": [
+        {
+          "name": "strike",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "userProfile",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "supporter",
+          "isMut": true,
+          "isSigner": true
+        }
+      ],
+      "args": [
+        {
+          "name": "amount",
+          "type": "u64"
+        }
+      ]
+    },
+    {
+      "name": "createWorkerCoop",
+      "accounts": [
+        {
+          "name": "workerCoop",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "user",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "clock",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "businessPlan",
+          "type": "string"
+        },
+        {
+          "name": "fundingGoal",
+          "type": "u64"
+        },
+        {
+          "name": "skillRequirements",
+          "type": {
+            "vec": {
+              "defined": "SkillType"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "fundWorkerCoop",
+      "accounts": [
+        {
+          "name": "workerCoop",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "userProfile",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "funder",
+          "isMut": true,
+          "isSigner": true
+        }
+      ],
+      "args": [
+        {
+          "name": "amount",
+          "type": "u64"
+        }
+      ]
+    },
+    {
+      "name": "createProposal",
+      "accounts": [
+        {
+          "name": "proposal",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "user",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "clock",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "title",
+          "type": "string"
+        },
+        {
+          "name": "description",
+          "type": "string"
+        },
+        {
+          "name": "proposalType",
+          "type": {
+            "defined": "ProposalType"
+          }
+        }
+      ]
+    },
+    {
+      "name": "voteOnProposal",
+      "accounts": [
+        {
+          "name": "proposal",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "voter",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "clock",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "vote",
+          "type": "bool"
+        },
+        {
+          "name": "tokenAmount",
+          "type": "u64"
+        }
+      ]
+    },
+    {
+      "name": "distributeUbi",
+      "accounts": [
+        {
+          "name": "daoState",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "userProfile",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "clock",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "applyTokenDecay",
+      "accounts": [
+        {
+          "name": "daoState",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "userProfile",
+          "isMut": true,
+          "isSigner": false
+        }
+      ],
+      "args": []
+    }
+  ],
+  "accounts": [
+    {
+      "name": "DaoState",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "authority",
+            "type": "publicKey"
+          },
+          {
+            "name": "totalSupply",
+            "type": "u64"
+          },
+          {
+            "name": "circulatingSupply",
+            "type": "u64"
+          },
+          {
+            "name": "medianBalance",
+            "type": "u64"
+          },
+          {
+            "name": "activeUsers",
+            "type": "u64"
+          },
+          {
+            "name": "totalActivities",
+            "type": "u64"
+          },
+          {
+            "name": "bump",
+            "type": "u8"
+          }
+        ]
+      }
+    },
+    {
+      "name": "UserProfile",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "owner",
+            "type": "publicKey"
+          },
+          {
+            "name": "unionMembership",
+            "type": "bool"
+          },
+          {
+            "name": "tokensEarned",
+            "type": "u64"
+          },
+          {
+            "name": "hoursWorked",
+            "type": "u64"
+          },
+          {
+            "name": "activitiesCompleted",
+            "type": "u64"
+          },
+          {
+            "name": "reputationScore",
+            "type": "u64"
+          },
+          {
+            "name": "strikeParticipation",
+            "type": "u64"
+          },
+          {
+            "name": "classSolidarityScore",
+            "type": "u64"
+          },
+          {
+            "name": "lastActivity",
+            "type": "i64"
+          },
+          {
+            "name": "bump",
+            "type": "u8"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Activity",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "creator",
+            "type": "publicKey"
+          },
+          {
+            "name": "category",
+            "type": {
+              "defined": "ActivityCategory"
+            }
+          },
+          {
+            "name": "description",
+            "type": "string"
+          },
+          {
+            "name": "location",
+            "type": {
+              "defined": "Location"
+            }
+          },
+          {
+            "name": "estimatedHours",
+            "type": "u32"
+          },
+          {
+            "name": "status",
+            "type": {
+              "defined": "ActivityStatus"
+            }
+          },
+          {
+            "name": "verificationCount",
+            "type": "u8"
+          },
+          {
+            "name": "verifiers",
+            "type": {
+              "vec": "publicKey"
+            }
+          },
+          {
+            "name": "rewardAmount",
+            "type": "u64"
+          },
+          {
+            "name": "timestamp",
+            "type": "i64"
+          },
+          {
+            "name": "bump",
+            "type": "u8"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Strike",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "creator",
+            "type": "publicKey"
+          },
+          {
+            "name": "company",
+            "type": "string"
+          },
+          {
+            "name": "unionVerification",
+            "type": "bool"
+          },
+          {
+            "name": "participantCount",
+            "type": "u32"
+          },
+          {
+            "name": "dailySupport",
+            "type": "u64"
+          },
+          {
+            "name": "legitimacyScore",
+            "type": "u8"
+          },
+          {
+            "name": "totalFund",
+            "type": "u64"
+          },
+          {
+            "name": "strikeDuration",
+            "type": "u32"
+          },
+          {
+            "name": "supporters",
+            "type": {
+              "vec": "publicKey"
+            }
+          },
+          {
+            "name": "timestamp",
+            "type": "i64"
+          },
+          {
+            "name": "bump",
+            "type": "u8"
+          }
+        ]
+      }
+    },
+    {
+      "name": "WorkerCoop",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "founders",
+            "type": {
+              "vec": "publicKey"
+            }
+          },
+          {
+            "name": "businessPlan",
+            "type": "string"
+          },
+          {
+            "name": "fundingGoal",
+            "type": "u64"
+          },
+          {
+            "name": "currentFunding",
+            "type": "u64"
+          },
+          {
+            "name": "skillRequirements",
+            "type": {
+              "vec": {
+                "defined": "SkillType"
+              }
+            }
+          },
+          {
+            "name": "democraticVotes",
+            "type": "u32"
+          },
+          {
+            "name": "sustainabilityScore",
+            "type": "u8"
+          },
+          {
+            "name": "members",
+            "type": {
+              "vec": "publicKey"
+            }
+          },
+          {
+            "name": "timestamp",
+            "type": "i64"
+          },
+          {
+            "name": "bump",
+            "type": "u8"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Proposal",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "creator",
+            "type": "publicKey"
+          },
+          {
+            "name": "title",
+            "type": "string"
+          },
+          {
+            "name": "description",
+            "type": "string"
+          },
+          {
+            "name": "proposalType",
+            "type": {
+              "defined": "ProposalType"
+            }
+          },
+          {
+            "name": "votesFor",
+            "type": "u64"
+          },
+          {
+            "name": "votesAgainst",
+            "type": "u64"
+          },
+          {
+            "name": "status",
+            "type": {
+              "defined": "ProposalStatus"
+            }
+          },
+          {
+            "name": "createdAt",
+            "type": "i64"
+          },
+          {
+            "name": "votingDeadline",
+            "type": "i64"
+          },
+          {
+            "name": "voters",
+            "type": {
+              "vec": "publicKey"
+            }
+          },
+          {
+            "name": "bump",
+            "type": "u8"
+          }
+        ]
+      }
+    }
+  ],
+  "types": [
+    {
+      "name": "Location",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "latitude",
+            "type": "f64"
+          },
+          {
+            "name": "longitude",
+            "type": "f64"
+          },
+          {
+            "name": "address",
+            "type": "string"
+          }
+        ]
+      }
+    },
+    {
+      "name": "ActivityCategory",
+      "type": {
+        "kind": "enum",
+        "variants": [
+          {
+            "name": "Environmental"
+          },
+          {
+            "name": "Disaster"
+          },
+          {
+            "name": "Elderly"
+          },
+          {
+            "name": "Education"
+          },
+          {
+            "name": "WorkerSolidarity"
+          }
+        ]
+      }
+    },
+    {
+      "name": "ActivityStatus",
+      "type": {
+        "kind": "enum",
+        "variants": [
+          {
+            "name": "Pending"
+          },
+          {
+            "name": "Verified"
+          },
+          {
+            "name": "Rejected"
+          }
+        ]
+      }
+    },
+    {
+      "name": "SkillType",
+      "type": {
+        "kind": "enum",
+        "variants": [
+          {
+            "name": "Technical"
+          },
+          {
+            "name": "Administrative"
+          },
+          {
+            "name": "Legal"
+          },
+          {
+            "name": "Marketing"
+          },
+          {
+            "name": "Production"
+          },
+          {
+            "name": "Education"
+          },
+          {
+            "name": "Healthcare"
+          },
+          {
+            "name": "Construction"
+          }
+        ]
+      }
+    },
+    {
+      "name": "ProposalType",
+      "type": {
+        "kind": "enum",
+        "variants": [
+          {
+            "name": "TokenomicsChange"
+          },
+          {
+            "name": "PolicyUpdate"
+          },
+          {
+            "name": "ResourceAllocation"
+          },
+          {
+            "name": "TechnicalUpgrade"
+          },
+          {
+            "name": "CommunityGuidelines"
+          }
+        ]
+      }
+    },
+    {
+      "name": "ProposalStatus",
+      "type": {
+        "kind": "enum",
+        "variants": [
+          {
+            "name": "Active"
+          },
+          {
+            "name": "Passed"
+          },
+          {
+            "name": "Rejected"
+          },
+          {
+            "name": "Executed"
+          }
+        ]
+      }
+    }
+  ],
+  "errors": [
+    {
+      "code": 6000,
+      "name": "DescriptionTooLong",
+      "msg": "Description is too long. Maximum 200 characters allowed."
+    },
+    {
+      "code": 6001,
+      "name": "AlreadyVerified",
+      "msg": "User has already verified this activity."
+    },
+    {
+      "code": 6002,
+      "msg": "Activity is not in pending status."
+    },
+    {
+      "code": 6003,
+      "name": "ProposalNotActive",
+      "msg": "Proposal is not active."
+    },
+    {
+      "code": 6004,
+      "msg": "Voting deadline has passed."
+    },
+    {
+      "code": 6005,
+      "name": "AlreadyVoted",
+      "msg": "User has already voted on this proposal."
+    },
+    {
+      "code": 6006,
+      "name": "UserNotActive",
+      "msg": "User is not active enough to receive UBI."
+    },
+    {
+      "code": 6007,
+      "name": "ExploitationDetected",
+      "msg": "Exploitation detected - working hours exceed limit."
+    },
+    {
+      "code": 6008,
+      "name": "InsufficientFunds",
+      "msg": "Insufficient funds for operation."
+    },
+    {
+      "code": 6009,
+      "name": "Unauthorized",
+      "msg": "Unauthorized operation."
+    }
+  ]
+}
